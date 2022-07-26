@@ -1,0 +1,10 @@
+## Interface: 20504
+## Version: v2.5.4
+## Title: MoveTooltip
+## Notes: Move the tooltip to a different location on your screen
+## Author: Semicircle of Greymane, Serrol
+## May 24, 2022
+## SavedVariables: SemiTipAnchorPos, SemiTipX, SemiTipY, SemiTipBackgroundColor
+
+MoveTooltip.xml
+MoveTooltip.lua

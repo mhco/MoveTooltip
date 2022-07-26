@@ -1,0 +1,4 @@
+package-as: MoveTooltip
+
+ignore:
+  - docs

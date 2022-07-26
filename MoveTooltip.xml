@@ -1,0 +1,556 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+
+<Script file="MoveTooltip.lua"/>
+
+<Frame name="MoveTooltip_Frame" enableMouse="true" hidden="true">
+	<Size>
+		<AbsDimension x="500" y="500"/>
+	</Size>
+	<Scripts>
+		<OnLoad>
+			MoveTooltip_Frame_OnLoad(self);
+			self:RegisterEvent("PLAYER_ENTERING_WORLD");
+			self:RegisterEvent("PLAYER_LOGIN");
+			self:RegisterEvent("ADDON_LOADED");
+		</OnLoad>
+		<OnShow>
+			MoveTooltip_Frame_OnShow(self);
+		</OnShow>
+		<OnEvent>
+			MoveTooltip_Frame_OnEvent(self, event, ...);
+		</OnEvent>
+	</Scripts>
+	<Layers>
+		<Layer level="ARTWORK">
+			<FontString name="$parentTitle" inherits="GameFontNormalHuge">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="10" y="-10"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</FontString>
+		</Layer>
+		<Layer level="ARTWORK">
+			<FontString name="$parentInfo" inherits="GameFontNormalLarge" justifyH="LEFT" justifyV="TOP" wordwrap="enabled" >
+				<Size>
+					<AbsDimension x="550" y="200" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parentTitle">
+						<Offset>
+							<AbsDimension x="10" y="-40"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</FontString>
+		</Layer>
+	</Layers>
+	<Frames>
+		<EditBox name="$parent_EditBox_X" enableMouse="true">
+			<Size>
+				<AbsDimension x="100" y="30" />
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="40" y="-100" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLeft" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="8" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" />
+				</Anchors>
+              <TexCoords left="0" right="0.0625" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentRight" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="8" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" />
+				</Anchors>
+				<TexCoords left="0.9375" right="1" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentMiddle" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="10" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT" />
+					<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT" />
+				</Anchors>
+				<TexCoords left="0.0625" right="0.9375" top="0" bottom="0.625" />
+				</Texture>
+			</Layer>
+			</Layers>
+			<Scripts>
+				<OnEditFocusGained>self:SetText("");</OnEditFocusGained>
+				<OnEditFocusLost>self:SetText(MoveTooltipX);</OnEditFocusLost>
+				<OnEnterPressed>MoveTooltip_EditBox_X_Action(self);</OnEnterPressed>
+				<OnEscapePressed>self:ClearFocus();</OnEscapePressed>
+				<OnEnter>
+					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, 10);
+					GameTooltip:SetText("Enter X Position", 1, 1, 1);
+					GameTooltip:AddLine("Last saved X Position is "..MoveTooltipX);
+					GameTooltip:Show();
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+			</Scripts>
+			<FontString font="Fonts\ARIALN.TTF">
+				<FontHeight>
+					<AbsValue val="14" />
+				</FontHeight>
+				<Color r="1" g="1" b="1" />
+				<Shadow>
+					<Color r="0" g="0" b="0" />
+					<Offset>
+						<AbsDimension x="1" y="-1" />
+					</Offset>
+				</Shadow>
+			</FontString>		
+		</EditBox>
+		<EditBox name="$parent_EditBox_Y" enableMouse="true">
+			<Size>
+				<AbsDimension x="100" y="30" />
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="40" y="-140" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLeft" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="8" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" />
+				</Anchors>
+              <TexCoords left="0" right="0.0625" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentRight" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="8" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" />
+				</Anchors>
+				<TexCoords left="0.9375" right="1" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentMiddle" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="10" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT" />
+					<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT" />
+				</Anchors>
+				<TexCoords left="0.0625" right="0.9375" top="0" bottom="0.625" />
+				</Texture>
+			</Layer>
+			</Layers>
+			<Scripts>
+				<OnEditFocusGained>self:SetText("");</OnEditFocusGained>
+				<OnEditFocusLost>self:SetText(MoveTooltipY);</OnEditFocusLost>
+				<OnEnterPressed>MoveTooltip_EditBox_Y_Action(self);</OnEnterPressed>
+				<OnEscapePressed>self:ClearFocus();</OnEscapePressed>
+				<OnEnter>
+					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, 10);
+					GameTooltip:SetText("Enter Y Position", 1, 1, 1);
+					GameTooltip:AddLine("Last saved Y Position is "..MoveTooltipY);
+					GameTooltip:Show();
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+			</Scripts>
+			<FontString font="Fonts\ARIALN.TTF">
+				<FontHeight>
+					<AbsValue val="14" />
+				</FontHeight>
+				<Color r="1" g="1" b="1" />
+				<Shadow>
+					<Color r="0" g="0" b="0" />
+					<Offset>
+						<AbsDimension x="1" y="-1" />
+					</Offset>
+				</Shadow>
+			</FontString>		
+		</EditBox>
+		<EditBox name="$parent_EditBox_AnchorPos" enableMouse="true">
+			<Size>
+				<AbsDimension x="100" y="30" />
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="40" y="-180" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLeft" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="8" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" />
+				</Anchors>
+              <TexCoords left="0" right="0.0625" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentRight" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="8" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" />
+				</Anchors>
+				<TexCoords left="0.9375" right="1" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentMiddle" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="10" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT" />
+					<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT" />
+				</Anchors>
+				<TexCoords left="0.0625" right="0.9375" top="0" bottom="0.625" />
+				</Texture>
+			</Layer>
+			</Layers>
+			<Scripts>
+				<OnEditFocusGained>self:SetText("");</OnEditFocusGained>
+				<OnEditFocusLost>self:SetText(MoveTooltipAnchorPos);</OnEditFocusLost>
+				<OnEnterPressed>MoveTooltip_EditBox_AnchorPos_Action(self);</OnEnterPressed>
+				<OnEscapePressed>self:ClearFocus();</OnEscapePressed>
+				<OnEnter>
+					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, 10);
+					GameTooltip:SetText("Enter an Anchor Position:", 1, 1, 1);
+					GameTooltip:AddLine("TOP, RIGHT, BOTTOM, LEFT, CENTER", 0, 1, 1);
+					GameTooltip:AddLine("TOPRIGHT, TOPLEFT, BOTTOMRIGHT, BOTTOMLEFT", 0, 1, 1);
+					GameTooltip:AddLine("Last saved Anchor Position is "..MoveTooltipAnchorPos);
+					GameTooltip:Show();
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+			</Scripts>
+			<FontString font="Fonts\ARIALN.TTF">
+				<FontHeight>
+					<AbsValue val="14" />
+				</FontHeight>
+				<Color r="1" g="1" b="1" />
+				<Shadow>
+					<Color r="0" g="0" b="0" />
+					<Offset>
+						<AbsDimension x="1" y="-1" />
+					</Offset>
+				</Shadow>
+			</FontString>		
+		</EditBox>
+		<EditBox name="$parent_EditBox_Red" enableMouse="true">
+			<Size>
+				<AbsDimension x="40" y="30" />
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="290" y="-100" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLeft" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="8" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" />
+				</Anchors>
+              <TexCoords left="0" right="0.0625" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentRight" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="8" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" />
+				</Anchors>
+				<TexCoords left="0.9375" right="1" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentMiddle" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="10" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT" />
+					<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT" />
+				</Anchors>
+				<TexCoords left="0.0625" right="0.9375" top="0" bottom="0.625" />
+				</Texture>
+			</Layer>
+			</Layers>
+			<Scripts>
+				<OnEditFocusGained>self:SetText("");</OnEditFocusGained>
+				<OnEditFocusLost>self:SetText(MoveTooltipBackgroundColor.r);</OnEditFocusLost>
+				<OnEnterPressed>MoveTooltip_EditBox_Red_Action(self);</OnEnterPressed>
+				<OnEscapePressed>self:ClearFocus();</OnEscapePressed>
+				<OnEnter>
+					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, 10);
+					GameTooltip:SetText("Enter Red Color", 1, 1, 1);
+					GameTooltip:AddLine("Last saved Red Color is "..MoveTooltipBackgroundColor.r);
+					GameTooltip:AddLine("Blizzard default is 0.09");
+					GameTooltip:Show();
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+			</Scripts>
+			<FontString font="Fonts\ARIALN.TTF">
+				<FontHeight>
+					<AbsValue val="14" />
+				</FontHeight>
+				<Color r="1" g="1" b="1" />
+				<Shadow>
+					<Color r="0" g="0" b="0" />
+					<Offset>
+						<AbsDimension x="1" y="-1" />
+					</Offset>
+				</Shadow>
+			</FontString>		
+		</EditBox>
+		<EditBox name="$parent_EditBox_Green" enableMouse="true">
+			<Size>
+				<AbsDimension x="40" y="30" />
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="290" y="-140" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLeft" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="8" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" />
+				</Anchors>
+              <TexCoords left="0" right="0.0625" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentRight" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="8" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" />
+				</Anchors>
+				<TexCoords left="0.9375" right="1" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentMiddle" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="10" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT" />
+					<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT" />
+				</Anchors>
+				<TexCoords left="0.0625" right="0.9375" top="0" bottom="0.625" />
+				</Texture>
+			</Layer>
+			</Layers>
+			<Scripts>
+				<OnEditFocusGained>self:SetText("");</OnEditFocusGained>
+				<OnEditFocusLost>self:SetText(MoveTooltipBackgroundColor.g);</OnEditFocusLost>
+				<OnEnterPressed>MoveTooltip_EditBox_Green_Action(self);</OnEnterPressed>
+				<OnEscapePressed>self:ClearFocus();</OnEscapePressed>
+				<OnEnter>
+					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, 10);
+					GameTooltip:SetText("Enter Green Color", 1, 1, 1);
+					GameTooltip:AddLine("Last saved Green Color is "..MoveTooltipBackgroundColor.g);
+					GameTooltip:AddLine("Blizzard default is 0.09");
+					GameTooltip:Show();
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+			</Scripts>
+			<FontString font="Fonts\ARIALN.TTF">
+				<FontHeight>
+					<AbsValue val="14" />
+				</FontHeight>
+				<Color r="1" g="1" b="1" />
+				<Shadow>
+					<Color r="0" g="0" b="0" />
+					<Offset>
+						<AbsDimension x="1" y="-1" />
+					</Offset>
+				</Shadow>
+			</FontString>		
+		</EditBox>
+		<EditBox name="$parent_EditBox_Blue" enableMouse="true">
+			<Size>
+				<AbsDimension x="40" y="30" />
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="290" y="-180" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLeft" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="8" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" />
+				</Anchors>
+              <TexCoords left="0" right="0.0625" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentRight" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="8" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" />
+				</Anchors>
+				<TexCoords left="0.9375" right="1" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentMiddle" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="10" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT" />
+					<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT" />
+				</Anchors>
+				<TexCoords left="0.0625" right="0.9375" top="0" bottom="0.625" />
+				</Texture>
+			</Layer>
+			</Layers>
+			<Scripts>
+				<OnEditFocusGained>self:SetText("");</OnEditFocusGained>
+				<OnEditFocusLost>self:SetText(MoveTooltipBackgroundColor.b);</OnEditFocusLost>
+				<OnEnterPressed>MoveTooltip_EditBox_Blue_Action(self);</OnEnterPressed>
+				<OnEscapePressed>self:ClearFocus();</OnEscapePressed>
+				<OnEnter>
+					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, 10);
+					GameTooltip:SetText("Enter Blue Color", 1, 1, 1);
+					GameTooltip:AddLine("Last saved Blue Color is "..MoveTooltipBackgroundColor.b);
+					GameTooltip:AddLine("Blizzard default is 0.19");
+					GameTooltip:Show();
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+			</Scripts>
+			<FontString font="Fonts\ARIALN.TTF">
+				<FontHeight>
+					<AbsValue val="14" />
+				</FontHeight>
+				<Color r="1" g="1" b="1" />
+				<Shadow>
+					<Color r="0" g="0" b="0" />
+					<Offset>
+						<AbsDimension x="1" y="-1" />
+					</Offset>
+				</Shadow>
+			</FontString>		
+		</EditBox>
+		<EditBox name="$parent_EditBox_Alpha" enableMouse="true">
+			<Size>
+				<AbsDimension x="40" y="30" />
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="290" y="-220" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentLeft" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="8" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" />
+				</Anchors>
+              <TexCoords left="0" right="0.0625" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentRight" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="8" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" />
+				</Anchors>
+				<TexCoords left="0.9375" right="1" top="0" bottom="0.625" />
+				</Texture>
+				<Texture name="$parentMiddle" file="Interface\Common\Common-Input-Border">
+				<Size>
+					<AbsDimension x="10" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT" />
+					<Anchor point="RIGHT" relativeTo="$parentRight" relativePoint="LEFT" />
+				</Anchors>
+				<TexCoords left="0.0625" right="0.9375" top="0" bottom="0.625" />
+				</Texture>
+			</Layer>
+			</Layers>
+			<Scripts>
+				<OnEditFocusGained>self:SetText("");</OnEditFocusGained>
+				<OnEditFocusLost>self:SetText(MoveTooltipBackgroundColor.a);</OnEditFocusLost>
+				<OnEnterPressed>MoveTooltip_EditBox_Alpha_Action(self);</OnEnterPressed>
+				<OnEscapePressed>self:ClearFocus();</OnEscapePressed>
+				<OnEnter>
+					GameTooltip:SetOwner(self, "ANCHOR_BOTTOMRIGHT", 20, 10);
+					GameTooltip:SetText("Enter Alpha Level", 1, 1, 1);
+					GameTooltip:AddLine("Last saved Alpha Level is "..MoveTooltipBackgroundColor.a);
+					GameTooltip:AddLine("Blizzard default is 1 in most cases");
+					GameTooltip:Show();
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+			</Scripts>
+			<FontString font="Fonts\ARIALN.TTF">
+				<FontHeight>
+					<AbsValue val="14" />
+				</FontHeight>
+				<Color r="1" g="1" b="1" />
+				<Shadow>
+					<Color r="0" g="0" b="0" />
+					<Offset>
+						<AbsDimension x="1" y="-1" />
+					</Offset>
+				</Shadow>
+			</FontString>		
+		</EditBox>
+	</Frames>
+</Frame>
+</Ui>
