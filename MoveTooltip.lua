@@ -70,37 +70,38 @@ function MoveTooltip_Frame_OnLoad(self)
 	_G[self:GetName().."_EditBox_Alpha"]:SetText(MoveTooltipBackgroundColor.a);
 	_G[self:GetName().."_EditBox_Alpha"]:SetCursorPosition(0);
 	InterfaceOptions_AddCategory(panel);
-local MoveTooltip_X_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-MoveTooltip_X_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 20, -112);
-MoveTooltip_X_Title:SetText("X");
 
-local MoveTooltip_Y_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-MoveTooltip_Y_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 20, -152);
-MoveTooltip_Y_Title:SetText("Y");
+	local MoveTooltip_X_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	MoveTooltip_X_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 20, -112);
+	MoveTooltip_X_Title:SetText("X");
 
-local MoveTooltip_AnchorPos_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-MoveTooltip_AnchorPos_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 20, -192);
-MoveTooltip_AnchorPos_Title:SetText("-");
+	local MoveTooltip_Y_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	MoveTooltip_Y_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 20, -152);
+	MoveTooltip_Y_Title:SetText("Y");
 
-local MoveTooltip_ColorPicker_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-MoveTooltip_ColorPicker_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 230, -90);
-MoveTooltip_ColorPicker_Title:SetText("Tooltip Default Background Color");
+	local MoveTooltip_AnchorPos_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	MoveTooltip_AnchorPos_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 20, -192);
+	MoveTooltip_AnchorPos_Title:SetText("-");
 
-local MoveTooltip_Red_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-MoveTooltip_Red_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 275, -112);
-MoveTooltip_Red_Title:SetText("R");
+	local MoveTooltip_ColorPicker_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	MoveTooltip_ColorPicker_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 230, -90);
+	MoveTooltip_ColorPicker_Title:SetText("Tooltip Default Background Color");
 
-local MoveTooltip_Green_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-MoveTooltip_Green_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 275, -152);
-MoveTooltip_Green_Title:SetText("G");
+	local MoveTooltip_Red_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	MoveTooltip_Red_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 275, -112);
+	MoveTooltip_Red_Title:SetText("R");
 
-local MoveTooltip_Blue_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-MoveTooltip_Blue_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 275, -192);
-MoveTooltip_Blue_Title:SetText("B");
+	local MoveTooltip_Green_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	MoveTooltip_Green_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 275, -152);
+	MoveTooltip_Green_Title:SetText("G");
 
-local MoveTooltip_Alpha_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-MoveTooltip_Alpha_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 275, -232);
-MoveTooltip_Alpha_Title:SetText("A");
+	local MoveTooltip_Blue_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	MoveTooltip_Blue_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 275, -192);
+	MoveTooltip_Blue_Title:SetText("B");
+
+	local MoveTooltip_Alpha_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+	MoveTooltip_Alpha_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 275, -232);
+	MoveTooltip_Alpha_Title:SetText("A");
 end
 
 function MoveTooltip_Frame_OnShow(self)
@@ -232,14 +233,24 @@ end
 
 function MoveTooltip_Frame_OnEvent(self, event, ...)
 	if (event == "PLAYER_ENTERING_WORLD") or (event == "PLAYER_LOGIN") then
-
 		if not GameTooltip.SetBackdrop then
 			Mixin(GameTooltip, BackdropTemplateMixin)
 		end
-		GameTooltip:SetBackdrop({bgFile = "Interface/Tooltips/UI-Tooltip-Background",
-								edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
-                                            tile = true, tileSize = 16, edgeSize = 16,
-                                            insets = { left = 5, right = 5, top = 5, bottom = 5 }});
+
+		GameTooltip:SetBackdrop({
+			bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+			edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+			tile = true,
+			tileSize = 16,
+			edgeSize = 16,
+			insets =
+			{
+				left = 5,
+				right = 5,
+				top = 5,
+				bottom = 5
+			}
+		});
 	end
 end
 
@@ -247,13 +258,14 @@ hooksecurefunc("GameTooltip_SetDefaultAnchor",function(tooltip, parent)
 	tooltip:SetOwner(parent, "ANCHOR_NONE");
 	tooltip:SetPoint("BOTTOMRIGHT", "UIParent", MoveTooltipAnchorPos, MoveTooltipX, MoveTooltipY);
 end);
+
 hooksecurefunc("SharedTooltip_SetBackdropStyle",function(self,BACKDROP_MoveTooltip)
 	GameTooltip:SetBackdropColor(MoveTooltipBackgroundColor.r, MoveTooltipBackgroundColor.g, MoveTooltipBackgroundColor.b, MoveTooltipBackgroundColor.a);
 end);
 
 -- Sets slash commands.
-SLASH_COMMANDS1 = "/movetooltip"
-SlashCmdList["COMMANDS"] = function(msg)
+SLASH_MOVETOOLTIP1 = "/movetooltip"
+SlashCmdList["MOVETOOLTIP"] = function(msg)
     msg = msg:lower()
     if msg == "help" or msg == "h" then
         print(AddonColor .. "MoveTooltip:|r\n/MoveTooltip displays the addon's settings page.")
