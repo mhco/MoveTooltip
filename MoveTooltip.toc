@@ -1,4 +1,4 @@
-## Interface: 20504
+## Interface: 30400
 ## Title: MoveTooltip
 ## Notes: Move the tooltip to a different location on your screen
 ## Version: v2.5.4
