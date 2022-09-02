@@ -1,7 +1,7 @@
 ## Interface: 30400
 ## Title: MoveTooltip
 ## Notes: Move the tooltip to a different location on your screen
-## Version: v2.5.4
+## Version: v3.4.0
 ## Author: Semicircle of Greymane, Serrol
 ## SavedVariables: MoveTooltipAnchorPos, MoveTooltipX, MoveTooltipY, MoveTooltipBackgroundColor
 
