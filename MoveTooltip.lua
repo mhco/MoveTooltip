@@ -69,7 +69,10 @@ function MoveTooltip_Frame_OnLoad(self)
 	_G[self:GetName().."_EditBox_Alpha"]:SetAutoFocus(false);
 	_G[self:GetName().."_EditBox_Alpha"]:SetText(MoveTooltipBackgroundColor.a);
 	_G[self:GetName().."_EditBox_Alpha"]:SetCursorPosition(0);
-	InterfaceOptions_AddCategory(panel);
+
+	category, layout = Settings.RegisterCanvasLayoutCategory(panel, panel.name, panel.name);
+	category.ID = panel.name
+	Settings.RegisterAddOnCategory(category);
 
 	local MoveTooltip_X_Title = MoveTooltip_Frame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
 	MoveTooltip_X_Title:SetPoint("TOPLEFT", MoveTooltip_Frame, "TOPLEFT", 20, -112);
